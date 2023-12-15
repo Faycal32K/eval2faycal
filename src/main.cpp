@@ -6,6 +6,8 @@ int main()  {
   int nbrePlace = 10;
   //variable permettant de récuperer le choix de l'utilisateur 
   int choix;
+  while (choix <1 || choix > 4 )
+    {
   cout << "************ Evaluation 2 ************" << endl <<endl;
   // partie a compléter a partir du 3.1
 cout << "" << endl << endl;
@@ -29,4 +31,5 @@ cout << "" << endl << endl;
       break;
   }
   return 0;
+}
 }
