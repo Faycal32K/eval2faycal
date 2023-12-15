@@ -13,5 +13,20 @@ cout << "" << endl << endl;
   cout << "2 - Nombre de place disponibles" << endl << endl;
   cout << "3 - Sortie du parking" << endl << endl;
   cout << "4 - Quitter" << endl << endl;
+  cin >> choix;
+  switch (choix) {
+    case 1:
+    cout << " Vous avez choisi l'option numero 1 "
+      break;
+    case 2:
+    cout << " Vous avez choisi l'option numero 2"
+      break;
+    case 3 :
+    cout << " Vous avez choisi l'option numero 3"
+      break
+      case 4:
+    cout << " Vous avez choisi l'option nummero 4"
+      break;
+  }
   return 0;
 }
