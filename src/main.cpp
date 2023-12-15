@@ -16,16 +16,16 @@ cout << "" << endl << endl;
   cin >> choix;
   switch (choix) {
     case 1:
-    cout << " Vous avez choisi l'option numero 1 "
+    cout << " Vous avez choisi l'option numero 1 ";
       break;
     case 2:
-    cout << " Vous avez choisi l'option numero 2"
+    cout << " Vous avez choisi l'option numero 2";
       break;
     case 3 :
-    cout << " Vous avez choisi l'option numero 3"
-      break
+    cout << " Vous avez choisi l'option numero 3";
+      break;
       case 4:
-    cout << " Vous avez choisi l'option nummero 4"
+    cout << " Vous avez choisi l'option nummero 4";
       break;
   }
   return 0;
