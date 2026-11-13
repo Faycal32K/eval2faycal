@@ -1,0 +1,29 @@
+// =====================================================================
+//  TOP 10 - Power BI - VERSION COLONNES CALCULÉES
+//  À créer dans : Modélisation > Nouvelle colonne (3 fois, dans l'ordre)
+//  Hypothèses : table 'Donnees', colonnes [Nom] et [Valeur]
+// =====================================================================
+
+// ---- Colonne 1 : total de la valeur pour chaque nom ----
+Total Nom =
+CALCULATE (
+    SUM ( 'Donnees'[Valeur] ),
+    ALLEXCEPT ( 'Donnees', 'Donnees'[Nom] )
+)
+
+// ---- Colonne 2 : rang du nom (1 = le plus grand, égalités départagées par le nom) ----
+Rang Nom =
+VAR MonNom   = 'Donnees'[Nom]
+VAR MonTotal = 'Donnees'[Total Nom]
+RETURN
+    1 + COUNTROWS (
+        FILTER (
+            ALL ( 'Donnees'[Nom], 'Donnees'[Total Nom] ),
+            'Donnees'[Total Nom] > MonTotal
+                || ( 'Donnees'[Total Nom] = MonTotal && 'Donnees'[Nom] < MonNom )
+        )
+    )
+
+// ---- Colonne 3 : valeur gardée seulement si le nom est dans le Top 10 ----
+Top 10 Valeur =
+IF ( 'Donnees'[Rang Nom] <= 10, 'Donnees'[Valeur] )

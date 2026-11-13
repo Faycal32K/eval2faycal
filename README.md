@@ -3,7 +3,8 @@
 Faire un **Top 10** à partir d'une donnée numérique (de 0 à +∞) et l'afficher
 dans un **graphique en bâtons**, avec le **nom** de chaque élément.
 
-Tout le code DAX est dans [`dax/top10.dax`](dax/top10.dax).
+- Version **mesures** : [`dax/top10.dax`](dax/top10.dax)
+- Version **colonnes calculées** (Modélisation > Nouvelle colonne) : [`dax/top10_colonnes.dax`](dax/top10_colonnes.dax)
 
 ## 1. Adapter les noms
 
@@ -42,3 +43,15 @@ Dans le volet **Filtres** du visuel : `Nom` > Type de filtre **N premiers** >
 Afficher les éléments **Haut 10** > Par valeur : `Valeur`.
 Le DAX ci-dessus reste plus pratique car le rang est réutilisable et
 s'adapte aux segments (slicers) grâce à `ALLSELECTED`.
+
+## Version « Nouvelle colonne »
+
+Dans **Modélisation > Nouvelle colonne**, crée 3 colonnes, dans l'ordre, en
+collant une formule à la fois depuis `dax/top10_colonnes.dax` :
+`Total Nom`, `Rang Nom`, `Top 10 Valeur`.
+
+Graphique : axe = `Nom`, valeurs = `Top 10 Valeur` (agrégation **Somme**),
+tri décroissant, étiquettes de données activées.
+
+Limite : une colonne calculée est figée au chargement des données, le Top 10
+ne change pas avec les filtres ou segments (contrairement aux mesures).
