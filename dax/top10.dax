@@ -1,0 +1,55 @@
+// =====================================================================
+//  TOP 10 - Power BI (DAX)
+//  Hypothèses (à adapter à ta base) :
+//    Table   : 'Donnees'
+//    Colonne : 'Donnees'[Nom]     -> le nom spécifique à afficher
+//    Colonne : 'Donnees'[Valeur]  -> la donnée de 0 à +infini
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+// 1) Mesure de base : la valeur totale pour chaque nom
+// ---------------------------------------------------------------------
+Total Valeur =
+SUM ( 'Donnees'[Valeur] )
+
+
+// ---------------------------------------------------------------------
+// 2) Rang de chaque nom (1 = la plus grande valeur)
+//    En cas d'égalité, on départage par ordre alphabétique du nom,
+//    pour avoir EXACTEMENT 10 barres.
+// ---------------------------------------------------------------------
+Rang =
+IF (
+    HASONEVALUE ( 'Donnees'[Nom] ),
+    RANK (
+        SKIP,
+        ALLSELECTED ( 'Donnees'[Nom] ),
+        ORDERBY ( [Total Valeur], DESC, 'Donnees'[Nom], ASC )
+    )
+)
+
+
+// ---------------------------------------------------------------------
+// 3) Mesure à mettre dans le graphique en bâtons
+//    Renvoie la valeur seulement pour les 10 premiers, sinon BLANK()
+//    -> Power BI masque automatiquement les noms vides.
+// ---------------------------------------------------------------------
+Top 10 Valeur =
+IF ( [Rang] <= 10, [Total Valeur] )
+
+
+// ---------------------------------------------------------------------
+// (Optionnel) Variante en TABLE CALCULÉE
+//   Modélisation > Nouvelle table, puis coller ceci.
+//   Attention : TOPN peut renvoyer plus de 10 lignes en cas d'égalité.
+// ---------------------------------------------------------------------
+Top 10 Table =
+TOPN (
+    10,
+    SUMMARIZECOLUMNS (
+        'Donnees'[Nom],
+        "Valeur", SUM ( 'Donnees'[Valeur] )
+    ),
+    [Valeur], DESC
+)
